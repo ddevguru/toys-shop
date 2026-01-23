@@ -11,15 +11,15 @@
   --card-foreground: oklch(0.22 0.012 260);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.22 0.012 260);
-  /* Primary: Soft rose/coral - warm, sweet, and mature */
-  --primary: oklch(0.65 0.12 25);
+  /* Primary: Vibrant teal-blue - fresh, modern, and attractive */
+  --primary: oklch(0.55 0.15 210);
   --primary-foreground: oklch(0.995 0.003 85);
-  /* Secondary: Soft lavender - elegant, sweet, and sophisticated */
-  --secondary: oklch(0.88 0.06 285);
-  --secondary-foreground: oklch(0.32 0.1 285);
-  /* Accent: Soft sky blue - fresh, modern, and pleasant */
-  --accent: oklch(0.85 0.08 200);
-  --accent-foreground: oklch(0.32 0.1 200);
+  /* Secondary: Soft mint green - fresh, pleasant, and sophisticated */
+  --secondary: oklch(0.85 0.1 160);
+  --secondary-foreground: oklch(0.25 0.1 160);
+  /* Accent: Bright sky blue - energetic, modern, and pleasant */
+  --accent: oklch(0.7 0.12 220);
+  --accent-foreground: oklch(0.995 0.003 85);
   --success: oklch(0.72 0.12 155);
   --success-foreground: oklch(0.995 0.003 85);
   --warning: oklch(0.8 0.15 70);
@@ -30,26 +30,25 @@
   --destructive-foreground: oklch(0.995 0.003 85);
   --border: oklch(0.94 0.008 85);
   --input: oklch(0.98 0.008 85);
-  --ring: oklch(0.65 0.12 25);
-  --chart-1: oklch(0.65 0.12 25);
-  --chart-2: oklch(0.85 0.08 200);
-  --chart-3: oklch(0.88 0.06 285);
+  --ring: oklch(0.55 0.15 210);
+  --chart-1: oklch(0.55 0.15 210);
+  --chart-2: oklch(0.7 0.12 220);
+  --chart-3: oklch(0.85 0.1 160);
   --chart-4: oklch(0.8 0.15 70);
   --chart-5: oklch(0.72 0.12 155);
   --radius: 1.5rem;
   --sidebar: oklch(0.995 0.003 85);
   --sidebar-foreground: oklch(0.22 0.012 260);
-  --sidebar-primary: oklch(0.65 0.12 25);
+  --sidebar-primary: oklch(0.55 0.15 210);
   --sidebar-primary-foreground: oklch(0.995 0.003 85);
-  --sidebar-accent: oklch(0.85 0.08 200);
-  --sidebar-accent-foreground: oklch(0.32 0.1 200);
+  --sidebar-accent: oklch(0.7 0.12 220);
+  --sidebar-accent-foreground: oklch(0.995 0.003 85);
   --sidebar-border: oklch(0.94 0.008 85);
-  --sidebar-ring: oklch(0.65 0.12 25);
+  --sidebar-ring: oklch(0.55 0.15 210);
   
-  /* Alternate background colors for sections */
-  --bg-alt-1: oklch(0.99 0.005 90);
-  --bg-alt-2: oklch(0.985 0.004 80);
-  --bg-alt-3: oklch(0.99 0.003 95);
+  /* Alternate background colors for sections - white and colored pattern */
+  --bg-alt-white: oklch(1 0 0); /* Pure white */
+  --bg-alt-colored: oklch(0.98 0.012 210); /* Very light tint of primary color (fresh teal-blue) */
 }
 
 .dark {
@@ -140,6 +139,11 @@
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+  
+  html {
+    overflow-x: hidden;
   }
   
   /* Enhanced typography for attractive text */
@@ -166,17 +170,19 @@
     color: oklch(0.42 0.015 260);
   }
   
-  /* Section alternate backgrounds */
-  .section-alt-1 {
-    background: oklch(0.99 0.005 90);
+  /* Section alternate backgrounds - white and colored pattern */
+  .section-alt-white {
+    background: oklch(1 0 0); /* Pure white */
   }
   
-  .section-alt-2 {
-    background: oklch(0.985 0.004 80);
+  .section-alt-colored {
+    background: oklch(0.98 0.012 210); /* Very light tint of primary color (fresh teal-blue) */
   }
   
-  .section-alt-3 {
-    background: oklch(0.99 0.003 95);
+  /* Add padding only to sections with alternate backgrounds */
+  section.section-alt-white,
+  section.section-alt-colored {
+    @apply py-12 md:py-16 lg:py-20;
   }
 
   /* Smooth animations */

@@ -66,11 +66,11 @@ export default function ProductCard({
               {badge}
             </div>
           )}
-        {discount > 0 && (
+          {discount > 0 && (
           <div className="bg-accent text-accent-foreground px-3 py-1 rounded-full text-xs font-bold shadow-sm">
-            Save {discount}%
-          </div>
-        )}
+              Save {discount}%
+            </div>
+          )}
         </div>
 
         {/* Favorite Icon - Top Right */}
@@ -154,11 +154,11 @@ export default function ProductCard({
           <div className="flex items-center justify-between pt-1">
             <span className="text-lg font-bold text-primary" style={{ fontFamily: 'var(--font-heading)' }}>
               ₹{discountPrice || price}
-              {discountPrice && (
+            {discountPrice && (
                 <span className="text-sm text-foreground/50 line-through font-normal ml-2">
-                  ₹{price}
-                </span>
-              )}
+                ₹{price}
+              </span>
+            )}
             </span>
           <button
             onClick={(e) => {

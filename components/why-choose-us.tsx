@@ -38,9 +38,9 @@ const features = [
     icon: Gift,
     title: 'Special Gift Packaging',
     description: 'Beautiful wrapping perfect for every occasion',
-    gradient: 'from-pink-400 to-pink-600',
-    bgGradient: 'from-pink-50 to-pink-100/50',
-    iconColor: 'text-pink-600',
+    gradient: 'from-teal-400 to-teal-600',
+    bgGradient: 'from-teal-50 to-teal-100/50',
+    iconColor: 'text-teal-600',
   },
   {
     icon: Zap,

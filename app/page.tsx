@@ -13,53 +13,53 @@ import HeroCarousel from '@/components/hero-carousel';
 export default function Home() {
   return (
     <main className="min-h-screen bg-background">
-      {/* Hero Section */}
+      {/* Hero Section - Image (no background) */}
       <section className="w-full">
-        <HeroCarousel />
+          <HeroCarousel />
       </section>
 
-      {/* Shop by Collections */}
-      <section className="section-alt-1">
+      {/* Shop by Collections - White */}
+      <section className="section-alt-white">
         <ShopCollections />
       </section>
 
-      {/* Studio Vibes Section */}
-      <section className="section-alt-2">
+      {/* Studio Vibes Section - Colored */}
+      <section className="section-alt-colored">
         <StudioVibes />
       </section>
 
-      {/* Signature Products */}
-      <section className="section-alt-1">
+      {/* Signature Products - White */}
+      <section className="section-alt-white">
         <SignatureProducts />
       </section>
 
-      {/* Marquee Banner */}
-      <section className="section-alt-3">
+      {/* Marquee Banner - Colored */}
+      <section className="section-alt-colored">
         <MarqueeBanner />
       </section>
 
-      {/* Featured Products */}
-      <section className="section-alt-2">
+      {/* Featured Products - White */}
+      <section className="section-alt-white">
         <FeaturedProducts />
       </section>
 
-      {/* Instagram Section */}
-      <section className="section-alt-1">
+      {/* Instagram Section - Colored */}
+      <section className="section-alt-colored">
         <InstagramSection />
       </section>
 
-      {/* Why Choose Us */}
-      <section className="section-alt-2">
+      {/* Why Choose Us - White */}
+      <section className="section-alt-white">
         <WhyChooseUs />
       </section>
 
-      {/* FAQ Section */}
-      <section className="section-alt-1">
+      {/* FAQ Section - Colored */}
+      <section className="section-alt-colored">
         <FAQSection />
       </section>
 
-      {/* Newsletter Section */}
-      <section className="section-alt-3">
+      {/* Newsletter Section - White */}
+      <section className="section-alt-white">
         <NewsletterSection />
       </section>
     </main>

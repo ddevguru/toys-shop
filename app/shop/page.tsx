@@ -165,13 +165,13 @@ export default function ShopPage() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 md:py-12">
         {/* Page Header */}
         <div className="mb-8">
-          <h1
+            <h1
             className="text-4xl md:text-5xl font-bold text-foreground mb-2"
-            style={{ fontFamily: 'var(--font-heading)' }}
-          >
+              style={{ fontFamily: 'var(--font-heading)' }}
+            >
             Shop Toys
-          </h1>
-        </div>
+            </h1>
+      </div>
 
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Left Sidebar - Filters */}
@@ -188,12 +188,12 @@ export default function ShopPage() {
                       onCheckedChange={() => handleCategoryChange(category)}
                     />
                     <Label htmlFor={category} className="text-foreground/70 cursor-pointer text-sm">
-                      {category}
+                {category}
                     </Label>
                   </div>
                 ))}
-              </div>
-            </div>
+        </div>
+      </div>
 
             {/* Age Group Filter */}
             <div>
@@ -210,8 +210,8 @@ export default function ShopPage() {
                       {ageGroup}
                     </Label>
                   </div>
-                ))}
-              </div>
+          ))}
+        </div>
             </div>
           </aside>
 
