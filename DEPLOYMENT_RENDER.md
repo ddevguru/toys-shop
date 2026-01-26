@@ -61,13 +61,15 @@ git push -u origin main
 
 **Build Command:**
 ```bash
-npm install && npm run build
+npm install --legacy-peer-deps && npm run build
 ```
 
 **Start Command:**
 ```bash
 npm start
 ```
+
+**Note:** We use `--legacy-peer-deps` to handle any peer dependency conflicts.
 
 **Root Directory:** (leave empty, or `./` if needed)
 
