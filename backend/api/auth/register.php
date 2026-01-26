@@ -3,7 +3,20 @@
  * User Registration Endpoint
  */
 
-// Set CORS headers first
+// Set CORS headers FIRST - before anything else
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS, PATCH');
+header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With, Accept, Origin, Cache-Control, X-File-Name');
+header('Access-Control-Allow-Credentials: true');
+header('Access-Control-Max-Age: 86400');
+
+// Handle preflight OPTIONS request IMMEDIATELY
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit;
+}
+
+// Include CORS config (for additional setup)
 require_once __DIR__ . '/../../config/cors.php';
 
 require_once __DIR__ . '/../../config/config.php';

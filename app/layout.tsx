@@ -1,7 +1,8 @@
 import React from "react"
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono, Fredoka, Poppins } from 'next/font/google'
-import { Analytics } from '@vercel/analytics/next'
+// Vercel Analytics - Only works on Vercel, disabled for Render
+// import { Analytics } from '@vercel/analytics/next'
 import { CartProvider } from '@/context/cart-context'
 import { AuthProvider } from '@/context/auth-context'
 import Header from '@/components/header'
@@ -61,7 +62,8 @@ export default function RootLayout({
             <Footer />
           </CartProvider>
         </AuthProvider>
-        <Analytics />
+        {/* Vercel Analytics - Only works on Vercel */}
+        {/* <Analytics /> */}
       </body>
     </html>
   )
