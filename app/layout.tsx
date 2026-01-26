@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { Geist, Geist_Mono, Fredoka, Poppins } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { CartProvider } from '@/context/cart-context'
+import { AuthProvider } from '@/context/auth-context'
 import Header from '@/components/header'
 import Footer from '@/components/footer'
 import './globals.css'
@@ -16,13 +17,6 @@ export const metadata: Metadata = {
   title: 'ToyCart Studio - Modern Kids Toys & Characters',
   description: 'Shop curated cartoon, superhero, and character toys in our modern studio-aesthetic toy store',
   generator: 'v0.app',
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    maximumScale: 1,
-    userScalable: false,
-  },
-  themeColor: '#f5e6d3',
   icons: {
     icon: [
       {
@@ -42,6 +36,14 @@ export const metadata: Metadata = {
   },
 }
 
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  themeColor: '#f5e6d3',
+}
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -50,13 +52,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${_fredoka.variable} ${_poppins.variable} font-sans antialiased flex flex-col min-h-screen`}>
-        <CartProvider>
-          <Header />
-          <main className="flex-1">
-            {children}
-          </main>
-          <Footer />
-        </CartProvider>
+        <AuthProvider>
+          <CartProvider>
+            <Header />
+            <main className="flex-1">
+              {children}
+            </main>
+            <Footer />
+          </CartProvider>
+        </AuthProvider>
         <Analytics />
       </body>
     </html>

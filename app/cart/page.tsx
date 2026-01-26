@@ -153,8 +153,11 @@ export default function CartPage() {
                   </span>
                 </div>
 
-                <Button className="w-full bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary text-primary-foreground font-bold rounded-full h-14 text-lg shadow-lg transition-all duration-300 hover:shadow-xl">
-                  Proceed to Checkout
+                <Button 
+                  className="w-full bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary text-primary-foreground font-bold rounded-full h-14 text-lg shadow-lg transition-all duration-300 hover:shadow-xl"
+                  asChild
+                >
+                  <Link href="/checkout">Proceed to Checkout</Link>
                 </Button>
 
                 <Button

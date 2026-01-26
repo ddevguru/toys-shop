@@ -1,145 +1,51 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ProductCard from '@/components/product-card';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-
-const allProducts = [
-  {
-    id: 1,
-    name: 'Classic Wooden Train Set',
-    category: 'Creative',
-    price: 1299,
-    rating: 4.5,
-    reviewCount: 60,
-    image: '/hero-toys-1.jpg',
-    badge: 'Best Seller',
-  },
-  {
-    id: 2,
-    name: 'Super Hero Action Squad',
-    category: 'Superhero',
-    price: 899,
-    rating: 4.8,
-    reviewCount: 48,
-    image: '/studio-collection.jpg',
-    badge: 'New',
-  },
-  {
-    id: 3,
-    name: 'Pastel Plush Bunny',
-    category: 'Plush',
-    price: 599,
-    rating: 4.5,
-    reviewCount: 60,
-    image: '/hero-toys-1.jpg',
-    badge: 'Soft',
-  },
-  {
-    id: 4,
-    name: 'Space Explorer Rocket',
-    category: 'Educational',
-    price: 1499,
-    rating: 4.5,
-    reviewCount: 60,
-    image: '/studio-collection.jpg',
-    badge: 'New',
-  },
-  {
-    id: 5,
-    name: 'Cartoon Characters Set',
-    category: 'Cartoon',
-    price: 2499,
-    discountPrice: 1999,
-    rating: 4.5,
-    reviewCount: 128,
-    image: '/hero-toys-1.jpg',
-    badge: 'New',
-  },
-  {
-    id: 6,
-    name: 'Superhero Action Figures',
-    category: 'Superhero',
-    price: 1999,
-    rating: 4.8,
-    reviewCount: 256,
-    image: '/studio-collection.jpg',
-    badge: 'Best Seller',
-  },
-  {
-    id: 7,
-    name: 'Creative Building Blocks',
-    category: 'Creative',
-    price: 1499,
-    discountPrice: 999,
-    rating: 4.6,
-    reviewCount: 89,
-    image: '/hero-toys-1.jpg',
-    badge: null,
-  },
-  {
-    id: 8,
-    name: 'Educational Puzzle Set',
-    category: 'Educational',
-    price: 899,
-    rating: 4.4,
-    reviewCount: 145,
-    image: '/studio-collection.jpg',
-    badge: null,
-  },
-  {
-    id: 9,
-    name: 'Premium Hero Collection',
-    category: 'Superhero',
-    price: 3499,
-    rating: 4.9,
-    reviewCount: 312,
-    image: '/hero-toys-1.jpg',
-    badge: 'Limited Edition',
-  },
-  {
-    id: 10,
-    name: 'Collectible Heroes Pack',
-    category: 'Superhero',
-    price: 2899,
-    rating: 4.7,
-    reviewCount: 178,
-    image: '/studio-collection.jpg',
-    badge: 'Best Seller',
-  },
-  {
-    id: 11,
-    name: 'DIY Craft Kit',
-    category: 'Creative',
-    price: 1299,
-    rating: 4.3,
-    reviewCount: 67,
-    image: '/hero-toys-1.jpg',
-    badge: null,
-  },
-  {
-    id: 12,
-    name: 'Smart Learning Toys',
-    category: 'Educational',
-    price: 2199,
-    discountPrice: 1699,
-    rating: 4.6,
-    reviewCount: 203,
-    image: '/studio-collection.jpg',
-    badge: 'New',
-  },
-];
+import { api } from '@/lib/api';
 
 const categories = ['Cartoon Characters', 'Superheroes', 'Creative', 'Educational', 'Plush Toys', 'Outdoor'];
 const ageGroups = ['0-2 Years', '3-5 Years', '5-8 Years', '8-12 Years', '12+ Years'];
 
 export default function ShopPage() {
+  const [allProducts, setAllProducts] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedAgeGroups, setSelectedAgeGroups] = useState<string[]>([]);
   const [sortBy, setSortBy] = useState('popularity');
+
+  useEffect(() => {
+    loadProducts();
+  }, []);
+
+  const loadProducts = async () => {
+    try {
+      const response = await api.getProducts();
+      if (response.success && response.data) {
+        // Transform API data to match component format
+        const transformed = response.data.map((p: any) => ({
+          id: p.id,
+          name: p.name,
+          category: p.category_name || p.category_slug || 'Uncategorized',
+          price: parseFloat(p.price),
+          discountPrice: p.discount_price ? parseFloat(p.discount_price) : undefined,
+          rating: parseFloat(p.rating) || 0,
+          reviewCount: p.review_count || 0,
+          image: p.main_image || '/placeholder.svg',
+          badge: p.badge || null,
+        }));
+        setAllProducts(transformed);
+      }
+    } catch (error) {
+      console.error('Failed to load products:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleCategoryChange = (category: string) => {
     setSelectedCategories(prev =>
@@ -159,6 +65,14 @@ export default function ShopPage() {
     }
     return true;
   });
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">Loading products...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background">

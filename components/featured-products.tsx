@@ -90,7 +90,7 @@ const featuredProducts = [
 
 export default function FeaturedProducts() {
   return (
-    <section className="py-16 md:py-28 relative overflow-hidden">
+    <div className="relative overflow-hidden">
       {/* Background Glow */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute top-0 left-1/3 w-96 h-96 bg-primary rounded-full blur-3xl" />
@@ -99,23 +99,23 @@ export default function FeaturedProducts() {
 
       <div className="relative max-w-7xl mx-auto px-4 md:px-8">
         {/* Section Header */}
-        <div className="mb-16 space-y-3 text-center animate-fadeInUp">
-          <span className="inline-block text-primary font-bold text-lg tracking-widest uppercase animate-fadeIn">
+        <div className="mb-8 sm:mb-12 md:mb-16 space-y-2 sm:space-y-3 text-center animate-fadeInUp">
+          <span className="inline-block text-primary font-bold text-sm sm:text-base md:text-lg tracking-widest uppercase animate-fadeIn">
             ✨ Trending Now
           </span>
           <h2
-            className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground animate-slideUp"
+            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-foreground animate-slideUp"
             style={{ fontFamily: 'var(--font-heading)', animationDelay: '0.1s' }}
           >
             Featured Toys
           </h2>
-          <p className="text-lg text-foreground/70 font-medium max-w-2xl mx-auto leading-relaxed animate-fadeIn" style={{ animationDelay: '0.2s' }}>
+          <p className="text-sm sm:text-base md:text-lg text-foreground/70 font-medium max-w-2xl mx-auto leading-relaxed animate-fadeIn px-4" style={{ animationDelay: '0.2s' }}>
             Discover our handpicked selection of popular and trending toys that kids absolutely love
           </p>
         </div>
 
         {/* Products Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10 max-w-5xl mx-auto">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8 lg:gap-10 max-w-5xl mx-auto">
           {featuredProducts.slice(0, 3).map((product, idx) => (
             <div
               key={product.id}
@@ -127,6 +127,6 @@ export default function FeaturedProducts() {
           ))}
         </div>
       </div>
-    </section>
+    </div>
   );
 }

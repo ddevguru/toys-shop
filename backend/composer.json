@@ -1,0 +1,16 @@
+{
+    "name": "toycartstudio/backend",
+    "description": "Toy Cart Studio Backend API",
+    "type": "project",
+    "require": {
+        "php": ">=7.4",
+        "ext-pdo": "*",
+        "ext-json": "*",
+        "phpoffice/phpspreadsheet": "^5.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "ToyCartStudio\\": "src/"
+        }
+    }
+}

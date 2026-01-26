@@ -1,3 +1,6 @@
+# Render Blueprint Configuration
+# This file can be used to deploy via Render Blueprint
+
 services:
   - type: web
     name: toy-cart-studio
@@ -7,5 +10,7 @@ services:
     envVars:
       - key: NODE_ENV
         value: production
+      - key: NEXT_PUBLIC_API_URL
+        sync: false  # Set this in Render dashboard
     healthCheckPath: /
-
+    autoDeploy: true

@@ -1,0 +1,206 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String
+  email         String    @unique
+  username      String?   @unique
+  password      String?
+  phone         String?
+  address       String?
+  city          String?
+  state         String?
+  zipCode       String?
+  country       String?
+  photo         String?
+  role          String    @default("user") // user, admin
+  isEmailVerified Boolean @default(false)
+  provider      String?   // google, email
+  providerId    String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  
+  cart          CartItem[]
+  wishlist      WishlistItem[]
+  orders        Order[]
+  addresses     Address[]
+  
+  @@map("users")
+}
+
+model Address {
+  id          String   @id @default(cuid())
+  userId      String
+  fullName    String
+  phone       String
+  addressLine1 String
+  addressLine2 String?
+  city        String
+  state       String
+  zipCode     String
+  country     String   @default("India")
+  isDefault   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  orders      Order[]
+  
+  @@map("addresses")
+}
+
+model Product {
+  id            String   @id @default(cuid())
+  name          String
+  slug          String   @unique
+  description   String?  @db.Text
+  price         Float
+  discountPrice Float?
+  category      String
+  subCategory   String?
+  images        String[] // Array of image URLs
+  stock         Int      @default(0)
+  sku           String?  @unique
+  brand         String?
+  ageGroup      String?
+  material      String?
+  features      String[] // Array of features
+  rating        Float    @default(0)
+  reviewCount   Int      @default(0)
+  badge         String?  // New, Best Seller, Limited Edition, etc.
+  isActive      Boolean  @default(true)
+  isFeatured    Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  cartItems     CartItem[]
+  wishlistItems WishlistItem[]
+  orderItems    OrderItem[]
+  reviews       Review[]
+  
+  @@map("products")
+}
+
+model CartItem {
+  id        String   @id @default(cuid())
+  userId    String
+  productId String
+  quantity  Int      @default(1)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, productId])
+  @@map("cart_items")
+}
+
+model WishlistItem {
+  id        String   @id @default(cuid())
+  userId    String
+  productId String
+  createdAt DateTime @default(now())
+  
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, productId])
+  @@map("wishlist_items")
+}
+
+model Order {
+  id              String      @id @default(cuid())
+  userId          String
+  orderNumber     String      @unique
+  status          String      @default("pending") // pending, confirmed, processing, shipped, delivered, cancelled
+  paymentStatus   String      @default("pending") // pending, paid, failed, refunded
+  paymentMethod   String?     // card, upi, cod, wallet
+  paymentId       String?
+  subtotal        Float
+  shipping        Float        @default(0)
+  tax             Float        @default(0)
+  discount        Float        @default(0)
+  total           Float
+  shippingAddressId String
+  trackingNumber  String?
+  notes           String?      @db.Text
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+  
+  user            User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  address         Address      @relation(fields: [shippingAddressId], references: [id])
+  items           OrderItem[]
+  invoice         Invoice?
+  
+  @@map("orders")
+}
+
+model OrderItem {
+  id          String   @id @default(cuid())
+  orderId     String
+  productId   String
+  quantity    Int
+  price       Float    // Price at time of order
+  discountPrice Float?
+  total       Float
+  createdAt   DateTime @default(now())
+  
+  order       Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product     Product  @relation(fields: [productId], references: [id])
+  
+  @@map("order_items")
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  productId String
+  userId    String
+  rating    Int      // 1-5
+  comment   String?  @db.Text
+  isVerified Boolean @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  
+  @@unique([productId, userId])
+  @@map("reviews")
+}
+
+model Invoice {
+  id            String   @id @default(cuid())
+  orderId      String   @unique
+  invoiceNumber String  @unique
+  pdfUrl       String?
+  createdAt    DateTime @default(now())
+  
+  order        Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  
+  @@map("invoices")
+}
+
+model ShippingRate {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  rate        Float
+  minOrder    Float?   @default(0)
+  maxOrder    Float?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@map("shipping_rates")
+}
+

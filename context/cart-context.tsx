@@ -40,11 +40,52 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     setMounted(true);
-    const savedCart = localStorage.getItem('cart');
-    const savedWishlist = localStorage.getItem('wishlist');
+    // Only load cart/wishlist if user is logged in
+    const token = localStorage.getItem('token');
+    if (token) {
+      const savedCart = localStorage.getItem('cart');
+      const savedWishlist = localStorage.getItem('wishlist');
+      
+      if (savedCart) setCart(JSON.parse(savedCart));
+      if (savedWishlist) setWishlist(JSON.parse(savedWishlist));
+    } else {
+      // Clear cart/wishlist if not logged in
+      setCart([]);
+      setWishlist([]);
+      localStorage.removeItem('cart');
+      localStorage.removeItem('wishlist');
+    }
+  }, []);
+
+  // Listen for logout events and token changes
+  useEffect(() => {
+    const checkAuthAndClear = () => {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        setCart([]);
+        setWishlist([]);
+        localStorage.removeItem('cart');
+        localStorage.removeItem('wishlist');
+      }
+    };
+
+    // Check immediately
+    checkAuthAndClear();
+
+    // Listen for storage changes (logout from other tabs)
+    window.addEventListener('storage', checkAuthAndClear);
     
-    if (savedCart) setCart(JSON.parse(savedCart));
-    if (savedWishlist) setWishlist(JSON.parse(savedWishlist));
+    // Listen for custom logout event
+    window.addEventListener('user-logout', checkAuthAndClear);
+    
+    // Also check periodically (in case of direct localStorage manipulation)
+    const interval = setInterval(checkAuthAndClear, 1000);
+
+    return () => {
+      window.removeEventListener('storage', checkAuthAndClear);
+      window.removeEventListener('user-logout', checkAuthAndClear);
+      clearInterval(interval);
+    };
   }, []);
 
   useEffect(() => {

@@ -1,0 +1,36 @@
+# Dependencies
+/vendor/
+composer.lock
+
+# Uploads
+/uploads/*
+!/uploads/.gitkeep
+
+# Invoices
+/invoices/*
+!/invoices/.gitkeep
+
+# Logs
+/logs/*
+!/logs/.gitkeep
+
+# Configuration (if contains secrets)
+# config/config.php
+# config/database.php
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.bak
+*.cache
+

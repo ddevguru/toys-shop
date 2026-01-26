@@ -1,0 +1,83 @@
+<?php
+/**
+ * Production Configuration Example
+ * Copy this to config.php and update with your values
+ */
+
+// Error Reporting - Disable in production
+error_reporting(E_ALL);
+ini_set('display_errors', 0);
+ini_set('log_errors', 1);
+ini_set('error_log', __DIR__ . '/../logs/error.log');
+
+// Timezone
+date_default_timezone_set('Asia/Kolkata');
+
+// Base URLs - UPDATE WITH YOUR DOMAIN
+define('BASE_URL', 'https://yourdomain.com');
+define('API_BASE_URL', BASE_URL . '/api');
+
+// Database Configuration - UPDATE WITH YOUR CPANEL CREDENTIALS
+define('DB_HOST', 'localhost');
+define('DB_NAME', 'cpanelusername_toycart_db'); // Format: cpanelusername_dbname
+define('DB_USER', 'cpanelusername_toycart_user'); // Format: cpanelusername_dbuser
+define('DB_PASS', 'your_secure_password_here');
+
+// JWT Configuration - CHANGE TO A STRONG RANDOM STRING
+define('JWT_SECRET', 'change-this-to-a-very-long-random-string-at-least-32-characters');
+define('JWT_ALGORITHM', 'HS256');
+define('JWT_EXPIRATION', 86400); // 24 hours
+
+// Google OAuth Configuration (if using)
+define('GOOGLE_CLIENT_ID', 'your-google-client-id');
+define('GOOGLE_CLIENT_SECRET', 'your-google-client-secret');
+define('GOOGLE_REDIRECT_URI', BASE_URL . '/api/auth/google/callback');
+
+// File Upload Settings
+define('UPLOAD_DIR', __DIR__ . '/../uploads/');
+define('INVOICE_DIR', __DIR__ . '/../invoices/');
+define('MAX_FILE_SIZE', 5242880); // 5MB
+define('ALLOWED_IMAGE_TYPES', ['image/jpeg', 'image/png', 'image/gif', 'image/webp']);
+
+// Pagination
+define('ITEMS_PER_PAGE', 20);
+
+// CORS Configuration - UPDATE WITH YOUR FRONTEND URL
+$allowed_origins = [
+    'https://your-frontend.onrender.com',
+    'https://www.yourdomain.com',
+    'https://yourdomain.com',
+];
+
+$origin = $_SERVER['HTTP_ORIGIN'] ?? '';
+if (in_array($origin, $allowed_origins)) {
+    header('Access-Control-Allow-Origin: ' . $origin);
+} else {
+    // For development only - restrict in production
+    header('Access-Control-Allow-Origin: *');
+}
+
+header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS, PATCH');
+header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With, Accept, Origin');
+header('Access-Control-Allow-Credentials: true');
+header('Access-Control-Max-Age: 86400');
+
+// Handle Preflight OPTIONS request
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit();
+}
+
+header('Content-Type: application/json; charset=UTF-8');
+
+// Create necessary directories
+if (!file_exists(UPLOAD_DIR)) {
+    mkdir(UPLOAD_DIR, 0755, true);
+}
+if (!file_exists(INVOICE_DIR)) {
+    mkdir(INVOICE_DIR, 0755, true);
+}
+if (!file_exists(__DIR__ . '/../logs')) {
+    mkdir(__DIR__ . '/../logs', 0755, true);
+}
+

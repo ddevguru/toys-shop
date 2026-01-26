@@ -12,19 +12,19 @@ export default function MarqueeBanner() {
   ];
 
   return (
-    <section className="py-6 md:py-8 bg-gradient-to-r from-primary/10 via-accent/10 to-secondary/10 overflow-hidden">
-      <div className="flex gap-8 md:gap-12 animate-scroll">
+    <div className="py-2 sm:py-3 md:py-4 bg-gradient-to-r from-primary/10 via-accent/10 to-secondary/10 overflow-hidden">
+      <div className="flex gap-4 sm:gap-6 md:gap-8 lg:gap-12 animate-scroll">
         {[...Array(3)].map((_, iteration) => (
-          <div key={iteration} className="flex gap-8 md:gap-12 shrink-0">
+          <div key={iteration} className="flex gap-4 sm:gap-6 md:gap-8 lg:gap-12 shrink-0">
             {items.map((item, idx) => {
               const Icon = item.icon;
               return (
                 <div
                   key={`${iteration}-${idx}`}
-                  className="flex items-center gap-3 whitespace-nowrap"
+                  className="flex items-center gap-2 sm:gap-3 whitespace-nowrap"
                 >
-                  <Icon className="h-5 w-5 text-primary shrink-0" />
-                  <span className="text-sm md:text-base font-semibold text-foreground">
+                  <Icon className="h-4 w-4 sm:h-5 sm:w-5 text-primary shrink-0" />
+                  <span className="text-xs sm:text-sm md:text-base font-semibold text-foreground">
                     {item.text}
                   </span>
                 </div>
@@ -47,6 +47,6 @@ export default function MarqueeBanner() {
           animation: scroll 30s linear infinite;
         }
       `}</style>
-    </section>
+    </div>
   );
 }

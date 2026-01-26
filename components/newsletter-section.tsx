@@ -18,7 +18,7 @@ export default function NewsletterSection() {
   };
 
   return (
-    <section className="py-24 container mx-auto px-4 md:px-6">
+    <div className="container mx-auto px-4 md:px-6">
         <div className="bg-primary rounded-[2.5rem] p-8 md:p-16 text-center text-white relative overflow-hidden shadow-2xl shadow-primary/30">
            {/* Decorative circles */}
            <div className="absolute top-0 left-0 w-64 h-64 bg-white/10 rounded-full -translate-x-1/2 -translate-y-1/2" />
@@ -44,6 +44,6 @@ export default function NewsletterSection() {
              <p className="text-xs opacity-70">No spam, just fun stuff. Unsubscribe anytime.</p>
            </div>
         </div>
-      </section>
+      </div>
   );
 }

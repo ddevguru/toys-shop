@@ -1,0 +1,14 @@
+This is a placeholder file. In production, create an Excel file with the following columns:
+- name (required)
+- price (required)
+- stock_quantity (required)
+- sku (optional)
+- description (optional)
+- short_description (optional)
+- discount_price (optional)
+- category (optional - name or slug)
+- age_group (optional)
+- material (optional)
+- badge (optional)
+- is_featured (optional - Yes/No)
+

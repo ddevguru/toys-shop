@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { Heart, Share2, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -40,8 +40,16 @@ export default function ProductDetailsView({
 }: ProductDetailsViewProps) {
   const [quantity, setQuantity] = useState(1);
   const [selectedColor, setSelectedColor] = useState('blue');
-  const { addToCart, addToWishlist, isInWishlist } = useCart();
+  const { addToCart, updateQuantity, cart, addToWishlist, isInWishlist } = useCart();
   const [isWishlisted, setIsWishlisted] = useState(isInWishlist(id));
+
+  // Check if product is already in cart and sync quantity
+  useEffect(() => {
+    const cartItem = cart.find(item => item.id === id);
+    if (cartItem) {
+      setQuantity(cartItem.quantity);
+    }
+  }, [cart, id]);
 
   const colors = ['blue', 'red', 'green', 'yellow'];
 
@@ -396,12 +404,21 @@ export default function ProductDetailsView({
             className="flex-1 bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary text-primary-foreground font-bold rounded-full shadow-lg transition-all duration-300 hover:shadow-xl"
             disabled={stockCount === 0}
             onClick={() => {
-              addToCart({
-                id,
-                name,
-                price: discountPrice || price,
-                image,
-              });
+              const cartItem = cart.find(item => item.id === id);
+              if (cartItem) {
+                // Update existing cart item quantity
+                updateQuantity(id, quantity);
+              } else {
+                // Add new item to cart with selected quantity
+                for (let i = 0; i < quantity; i++) {
+                  addToCart({
+                    id,
+                    name,
+                    price: discountPrice || price,
+                    image,
+                  });
+                }
+              }
             }}
           >
             Add to Cart

@@ -184,7 +184,7 @@ export default function InstagramSection() {
   };
 
   return (
-    <section className="py-16 md:py-28 relative overflow-hidden">
+    <div className="relative overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute top-1/2 left-0 w-96 h-96 bg-secondary rounded-full blur-3xl" />
@@ -193,24 +193,24 @@ export default function InstagramSection() {
 
       <div className="relative max-w-7xl mx-auto px-4 md:px-8">
         {/* Header */}
-        <div className="mb-16 space-y-4 text-center animate-fadeInUp">
+        <div className="mb-8 sm:mb-12 md:mb-16 space-y-2 sm:space-y-4 text-center animate-fadeInUp">
           <div className="flex items-center justify-center gap-2 mb-2 animate-fadeIn">
-            <span className="text-4xl animate-pulse-slow">📸</span>
+            <span className="text-2xl sm:text-3xl md:text-4xl animate-pulse-slow">📸</span>
             <h2
-              className="text-4xl md:text-5xl font-bold text-foreground animate-slideUp"
+              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground animate-slideUp"
               style={{ fontFamily: 'var(--font-heading)', animationDelay: '0.1s' }}
             >
               Follow Our Story
             </h2>
           </div>
-          <p className="text-lg text-foreground/70 font-medium leading-relaxed animate-fadeIn" style={{ animationDelay: '0.2s' }}>
+          <p className="text-sm sm:text-base md:text-lg text-foreground/70 font-medium leading-relaxed animate-fadeIn px-4" style={{ animationDelay: '0.2s' }}>
             Join thousands of happy kids and parents sharing their toy moments with us
           </p>
           <a
             href="https://instagram.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block text-primary font-bold hover:underline"
+            className="inline-block text-sm sm:text-base text-primary font-bold hover:underline"
           >
             @toycart.studio
           </a>
@@ -255,17 +255,17 @@ export default function InstagramSection() {
         {/* Reels Section */}
         <div>
           <h3
-            className="text-2xl md:text-3xl font-bold text-foreground mb-8 md:mb-12"
+            className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-6 sm:mb-8 md:mb-12"
             style={{ fontFamily: 'var(--font-heading)' }}
           >
             Latest Reels
           </h3>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
+          <div className="flex md:grid md:grid-cols-3 gap-4 sm:gap-6 md:gap-8 lg:gap-10 overflow-x-auto pb-4 md:pb-0 scrollbar-hide">
             {reels.map((reel, idx) => (
               <div
                 key={reel.id}
-                className="group rounded-2xl overflow-hidden border-2 border-muted hover:border-primary/50 transition-all duration-500 bg-card shadow-lg hover:shadow-2xl hover:shadow-primary/20 animate-slideUp cursor-pointer"
+                className="group min-w-[280px] sm:min-w-[320px] md:min-w-0 rounded-2xl overflow-hidden border-2 border-muted hover:border-primary/50 transition-all duration-500 bg-card shadow-lg hover:shadow-2xl hover:shadow-primary/20 animate-slideUp cursor-pointer flex-shrink-0 md:flex-shrink"
                 style={{ animationDelay: `${idx * 100}ms` }}
                 onClick={() => openReelPopup(reel)}
               >
@@ -619,6 +619,6 @@ export default function InstagramSection() {
           </DialogContent>
         </Dialog>
       )}
-    </section>
+    </div>
   );
 }

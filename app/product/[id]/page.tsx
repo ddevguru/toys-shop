@@ -1,5 +1,5 @@
 import React from 'react';
-import { Metadata } from 'next';
+import { Metadata, Viewport } from 'next';
 import ProductDetailsView from '@/components/product-details-view';
 import ProductReviews from '@/components/product-reviews';
 import RecommendedProducts from '@/components/recommended-products';
@@ -50,14 +50,23 @@ const productData = {
 export async function generateMetadata({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }): Promise<Metadata> {
-  const product = productData[params.id as keyof typeof productData];
+  const { id } = await params;
+  const product = productData[id as keyof typeof productData];
 
   return {
     title: product ? `${product.name} - ToyCart Studio` : 'Product Not Found',
     description: product?.description || 'Shop toys at ToyCart Studio',
   };
+}
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  themeColor: '#f5e6d3',
 }
 
 interface ProductPageProps {

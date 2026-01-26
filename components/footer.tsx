@@ -10,24 +10,24 @@ export default function Footer() {
     <footer className="border-t border-border bg-background">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 md:py-16">
         {/* Main Footer Content */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-12 mb-12">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 md:gap-12 mb-8 sm:mb-12">
           {/* Brand Section */}
-          <div className="space-y-4">
+          <div className="space-y-2 sm:space-y-4 col-span-2 sm:col-span-1">
             <div className="flex items-center gap-2">
-              <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-primary">
-                <span className="text-lg font-bold text-primary-foreground">T</span>
+              <div className="flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-xl sm:rounded-2xl bg-primary">
+                <span className="text-base sm:text-lg font-bold text-primary-foreground">T</span>
               </div>
-              <span className="font-bold text-foreground">ToyCart Studio</span>
+              <span className="font-bold text-sm sm:text-base text-foreground">ToyCart Studio</span>
             </div>
-            <p className="text-sm text-foreground/60">
+            <p className="text-xs sm:text-sm text-foreground/60">
               Curated toys for playful kids and happy parents. Studio-grade toys for studio-grade smiles.
             </p>
           </div>
 
           {/* Quick Links */}
-          <div className="space-y-4">
-            <h3 className="font-semibold text-foreground">Quick Links</h3>
-            <nav className="flex flex-col gap-2">
+          <div className="space-y-2 sm:space-y-4">
+            <h3 className="font-semibold text-xs sm:text-sm md:text-base text-foreground">Quick Links</h3>
+            <nav className="flex flex-col gap-1.5 sm:gap-2">
               {[
                 { label: 'Home', href: '/' },
                 { label: 'Shop', href: '/shop' },
@@ -37,7 +37,7 @@ export default function Footer() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="text-sm text-foreground/60 transition-colors hover:text-foreground"
+                  className="text-xs sm:text-sm text-foreground/60 transition-colors hover:text-foreground"
                 >
                   {link.label}
                 </Link>
@@ -46,19 +46,19 @@ export default function Footer() {
           </div>
 
           {/* Help Section */}
-          <div className="space-y-4">
-            <h3 className="font-semibold text-foreground">Help</h3>
-            <nav className="flex flex-col gap-2">
+          <div className="space-y-2 sm:space-y-4">
+            <h3 className="font-semibold text-xs sm:text-sm md:text-base text-foreground">Help</h3>
+            <nav className="flex flex-col gap-1.5 sm:gap-2">
               {[
                 { label: 'FAQ', href: '/#faq' },
-                { label: 'Shipping', href: '/contact' },
-                { label: 'Returns', href: '/contact' },
-                { label: 'Support', href: '/contact' },
-              ].map((link) => (
+                { label: 'Shipping', href: '/contact?topic=shipping' },
+                { label: 'Returns', href: '/contact?topic=returns' },
+                { label: 'Support', href: '/contact?topic=support' },
+              ].map((link, index) => (
                 <Link
-                  key={link.href}
+                  key={`${link.href}-${index}`}
                   href={link.href}
-                  className="text-sm text-foreground/60 transition-colors hover:text-foreground"
+                  className="text-xs sm:text-sm text-foreground/60 transition-colors hover:text-foreground"
                 >
                   {link.label}
                 </Link>
@@ -67,30 +67,30 @@ export default function Footer() {
           </div>
 
           {/* Contact Info */}
-          <div className="space-y-4">
-            <h3 className="font-semibold text-foreground">Contact</h3>
-            <div className="space-y-3">
-              <div className="flex items-start gap-3">
-                <Mail className="h-5 w-5 text-accent mt-0.5" />
+          <div className="space-y-2 sm:space-y-4 col-span-2 sm:col-span-1">
+            <h3 className="font-semibold text-xs sm:text-sm md:text-base text-foreground">Contact</h3>
+            <div className="space-y-2 sm:space-y-3">
+              <div className="flex items-start gap-2 sm:gap-3">
+                <Mail className="h-4 w-4 sm:h-5 sm:w-5 text-accent mt-0.5 flex-shrink-0" />
                 <a
                   href="mailto:hello@toycart.studio"
-                  className="text-sm text-foreground/60 transition-colors hover:text-foreground"
+                  className="text-xs sm:text-sm text-foreground/60 transition-colors hover:text-foreground break-all"
                 >
                   hello@toycart.studio
                 </a>
               </div>
-              <div className="flex items-start gap-3">
-                <Phone className="h-5 w-5 text-accent mt-0.5" />
+              <div className="flex items-start gap-2 sm:gap-3">
+                <Phone className="h-4 w-4 sm:h-5 sm:w-5 text-accent mt-0.5 flex-shrink-0" />
                 <a
                   href="tel:+919876543210"
-                  className="text-sm text-foreground/60 transition-colors hover:text-foreground"
+                  className="text-xs sm:text-sm text-foreground/60 transition-colors hover:text-foreground"
                 >
                   +91 9876 543 210
                 </a>
               </div>
-              <div className="flex items-start gap-3">
-                <MapPin className="h-5 w-5 text-accent mt-0.5" />
-                <p className="text-sm text-foreground/60">
+              <div className="flex items-start gap-2 sm:gap-3">
+                <MapPin className="h-4 w-4 sm:h-5 sm:w-5 text-accent mt-0.5 flex-shrink-0" />
+                <p className="text-xs sm:text-sm text-foreground/60">
                   Studio, Mumbai, India
                 </p>
               </div>

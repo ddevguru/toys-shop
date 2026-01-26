@@ -1,0 +1,7 @@
+name,price,stock_quantity,sku,description,short_description,discount_price,category,age_group,material,badge,is_featured
+Classic Wooden Train Set,1299,50,TRAIN001,"A beautiful wooden train set with multiple cars and tracks","Premium wooden train set",999,Creative,"5-8 years","Eco-friendly wood",Best Seller,Yes
+Super Hero Action Squad,899,75,HERO001,"Action figures of popular superheroes","Superhero action figures",,Superheroes,"8-12 years",Premium plastic,New,Yes
+Pastel Plush Bunny,599,100,BUNNY001,"Soft and cuddly plush bunny toy","Cuddly plush bunny",,Plush Toys,"0-2 years",Soft fabric,Soft,No
+Space Explorer Rocket,1499,30,ROCKET001,"Educational rocket toy with lights and sounds","Interactive space rocket",1199,Educational,"5-8 years",Plastic and metal,New,Yes
+Cartoon Characters Set,2499,45,CARTOON001,"Collection of popular cartoon character figures","Cartoon character collection",1999,Cartoon Characters,"3-5 years",Safe plastic,Best Seller,Yes
+

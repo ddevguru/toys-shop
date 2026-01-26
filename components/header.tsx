@@ -2,14 +2,18 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Heart, ShoppingCart, Menu, X, Search, User } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { Heart, ShoppingCart, Menu, X, Search, User, LogOut, Package, UserCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useCart } from '@/context/cart-context';
+import { useAuth } from '@/context/auth-context';
 import SearchBar from '@/components/search-bar';
 
 export default function Header() {
+  const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { cart, wishlist } = useCart();
+  const { isAuthenticated, user, logout, isAdmin } = useAuth();
 
   const navLinks = [
     { label: 'Home', href: '/' },
@@ -91,14 +95,64 @@ export default function Header() {
                 )}
               </Button>
             </Link>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="hidden sm:flex hover:bg-secondary/10 hover:text-secondary transition-all duration-300 rounded-full"
-              aria-label="Account"
-            >
-              <User className="h-5 w-5" />
-            </Button>
+            {isAuthenticated ? (
+              <div className="hidden sm:flex items-center gap-2">
+                <Link href="/orders">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="hover:bg-primary/10 hover:text-primary transition-all duration-300 rounded-full"
+                    aria-label="Orders"
+                  >
+                    <Package className="h-5 w-5" />
+                  </Button>
+                </Link>
+                <Link href="/profile">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="hover:bg-primary/10 hover:text-primary transition-all duration-300 rounded-full"
+                    aria-label="Profile"
+                  >
+                    <UserCircle className="h-5 w-5" />
+                  </Button>
+                </Link>
+                {isAdmin && (
+                  <Link href="/admin">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="hover:bg-primary/10 hover:text-primary transition-all duration-300 rounded-full"
+                    >
+                      Admin
+                    </Button>
+                  </Link>
+                )}
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => {
+                    logout();
+                    router.push('/');
+                  }}
+                  className="hover:bg-secondary/10 hover:text-secondary transition-all duration-300 rounded-full"
+                  aria-label="Logout"
+                >
+                  <LogOut className="h-5 w-5" />
+                </Button>
+              </div>
+            ) : (
+              <Link href="/login">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="hidden sm:flex hover:bg-secondary/10 hover:text-secondary transition-all duration-300 rounded-full"
+                  aria-label="Login"
+                >
+                  <User className="h-5 w-5" />
+                </Button>
+              </Link>
+            )}
 
             {/* Mobile Menu Button */}
             <Button
@@ -131,6 +185,26 @@ export default function Header() {
                   {link.label}
                 </Link>
               ))}
+              {isAuthenticated && (
+                <>
+                  <Link
+                    href="/orders"
+                    className="rounded-lg px-4 py-2 text-sm font-medium text-foreground/70 transition-colors hover:bg-secondary hover:text-foreground flex items-center gap-2"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    <Package className="h-4 w-4" />
+                    My Orders
+                  </Link>
+                  <Link
+                    href="/profile"
+                    className="rounded-lg px-4 py-2 text-sm font-medium text-foreground/70 transition-colors hover:bg-secondary hover:text-foreground flex items-center gap-2"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    <UserCircle className="h-4 w-4" />
+                    My Profile
+                  </Link>
+                </>
+              )}
             </div>
           </nav>
         )}

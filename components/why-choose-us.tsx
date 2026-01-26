@@ -54,7 +54,7 @@ const features = [
 
 export default function WhyChooseUs() {
   return (
-    <section className="py-16 md:py-28 relative overflow-hidden">
+    <div className="relative overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute top-0 left-0 w-96 h-96 bg-primary rounded-full blur-3xl" />
@@ -63,20 +63,20 @@ export default function WhyChooseUs() {
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-8">
         {/* Section Header */}
-        <div className="mb-16 space-y-4 text-center animate-fadeInUp">
+        <div className="mb-8 sm:mb-12 md:mb-16 space-y-2 sm:space-y-4 text-center animate-fadeInUp">
           <h2
-            className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground animate-slideUp"
+            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-foreground animate-slideUp"
             style={{ fontFamily: 'var(--font-heading)', animationDelay: '0.1s' }}
           >
             Why Kids Love Us 🎉
           </h2>
-          <p className="text-lg md:text-xl text-foreground/70 max-w-2xl mx-auto font-medium leading-relaxed animate-fadeIn" style={{ animationDelay: '0.2s' }}>
+          <p className="text-sm sm:text-base md:text-lg lg:text-xl text-foreground/70 max-w-2xl mx-auto font-medium leading-relaxed animate-fadeIn px-4" style={{ animationDelay: '0.2s' }}>
             From safety to smiles, we're committed to creating unforgettable moments
           </p>
         </div>
 
         {/* Features Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
           {features.map((feature, idx) => {
             const Icon = feature.icon;
             return (
@@ -96,22 +96,22 @@ export default function WhyChooseUs() {
                 />
 
                 {/* Content */}
-                <div className="relative p-8 md:p-10 space-y-4 h-full flex flex-col bg-white group-hover:bg-white/95 backdrop-blur transition-all duration-300">
+                <div className="relative p-4 sm:p-6 md:p-8 lg:p-10 space-y-2 sm:space-y-3 md:space-y-4 h-full flex flex-col bg-white group-hover:bg-white/95 backdrop-blur transition-all duration-300">
                   {/* Icon Container */}
-                  <div className={`inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br ${feature.gradient} shadow-lg transform transition-all duration-300 group-hover:scale-110 group-hover:rotate-6`}>
-                    <Icon className="h-8 w-8 text-white" />
+                  <div className={`inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-xl sm:rounded-2xl bg-gradient-to-br ${feature.gradient} shadow-lg transform transition-all duration-300 group-hover:scale-110 group-hover:rotate-6`}>
+                    <Icon className="h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8 text-white" />
                   </div>
 
                   {/* Title */}
                   <h3
-                    className="text-xl md:text-2xl font-bold text-foreground"
+                    className="text-sm sm:text-base md:text-xl lg:text-2xl font-bold text-foreground"
                     style={{ fontFamily: 'var(--font-heading)' }}
                   >
                     {feature.title}
                   </h3>
 
                   {/* Description */}
-                  <p className="text-foreground/70 leading-relaxed font-medium flex-grow">
+                  <p className="text-xs sm:text-sm md:text-base text-foreground/70 leading-relaxed font-medium flex-grow">
                     {feature.description}
                   </p>
 
@@ -148,6 +148,6 @@ export default function WhyChooseUs() {
           ))}
         </div>
       </div>
-    </section>
+    </div>
   );
 }
