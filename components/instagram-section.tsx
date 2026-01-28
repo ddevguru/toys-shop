@@ -261,16 +261,16 @@ export default function InstagramSection() {
             Latest Reels
           </h3>
 
-          <div className="flex md:grid md:grid-cols-3 gap-4 sm:gap-6 md:gap-8 lg:gap-10 overflow-x-auto pb-4 md:pb-0 scrollbar-hide">
+          <div className="flex md:grid md:grid-cols-3 gap-3 sm:gap-4 md:gap-8 lg:gap-10 overflow-x-auto pb-4 md:pb-0 scrollbar-hide">
             {reels.map((reel, idx) => (
               <div
                 key={reel.id}
-                className="group min-w-[280px] sm:min-w-[320px] md:min-w-0 rounded-2xl overflow-hidden border-2 border-muted hover:border-primary/50 transition-all duration-500 bg-card shadow-lg hover:shadow-2xl hover:shadow-primary/20 animate-slideUp cursor-pointer flex-shrink-0 md:flex-shrink"
+                className="group min-w-[240px] sm:min-w-[280px] md:min-w-0 rounded-xl sm:rounded-2xl overflow-hidden border-2 border-muted hover:border-primary/50 transition-all duration-500 bg-card shadow-lg hover:shadow-2xl hover:shadow-primary/20 animate-slideUp cursor-pointer flex-shrink-0 md:flex-shrink"
                 style={{ animationDelay: `${idx * 100}ms` }}
                 onClick={() => openReelPopup(reel)}
               >
                 {/* Reel Video/Image */}
-                <div className="relative h-96 overflow-hidden bg-muted">
+                <div className="relative h-[420px] sm:h-[450px] md:h-96 overflow-hidden bg-muted">
                   <Image
                     src={reel.image || "/placeholder.svg"}
                     alt={reel.caption}

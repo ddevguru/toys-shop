@@ -3,7 +3,28 @@
  * Products API - List, Get, Create, Update, Delete
  */
 
-// Set CORS headers first
+// Set CORS headers first - ensure output buffering
+if (!ob_get_level()) {
+    ob_start();
+}
+
+// Set CORS headers explicitly
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS, PATCH');
+header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With, Accept, Origin');
+header('Access-Control-Max-Age: 86400');
+
+// Handle OPTIONS preflight
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    if (ob_get_level()) {
+        ob_clean();
+    }
+    http_response_code(200);
+    header('Content-Length: 0');
+    exit;
+}
+
+// Set CORS headers via config
 require_once __DIR__ . '/../../config/cors.php';
 
 require_once __DIR__ . '/../../config/config.php';

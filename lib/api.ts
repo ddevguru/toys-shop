@@ -35,7 +35,11 @@ class ApiService {
 
     // Ensure endpoint starts with / and API_BASE_URL doesn't end with /
     const cleanBaseUrl = API_BASE_URL.endsWith('/') ? API_BASE_URL.slice(0, -1) : API_BASE_URL;
-    const normalizedEndpoint = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
+    let normalizedEndpoint = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
+    // Remove trailing slash to prevent redirects
+    normalizedEndpoint = normalizedEndpoint.replace(/\/$/, '');
+    // Remove trailing ? if present (empty query string)
+    normalizedEndpoint = normalizedEndpoint.replace(/\?$/, '');
     const fullUrl = `${cleanBaseUrl}${normalizedEndpoint}`;
 
     try {

@@ -23,7 +23,7 @@ export default function CartPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="max-w-7xl mx-auto px-4 md:px-8 py-12 md:py-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-8 sm:py-12 md:py-20">
         {/* Header */}
         <div className="mb-12 space-y-4">
           <h1
@@ -57,10 +57,10 @@ export default function CartPage() {
               {cart.map((item) => (
                 <div
                   key={item.id}
-                  className="flex gap-6 md:gap-8 bg-card border-2 border-muted rounded-3xl p-6 md:p-8 hover:border-primary/50 transition-all duration-300"
+                  className="flex flex-col sm:flex-row gap-4 sm:gap-6 md:gap-8 bg-card border-2 border-muted rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 hover:border-primary/50 transition-all duration-300"
                 >
                   {/* Product Image */}
-                  <div className="w-24 h-24 md:w-32 md:h-32 flex-shrink-0 rounded-2xl overflow-hidden bg-muted">
+                  <div className="w-full sm:w-24 h-48 sm:h-24 md:w-32 md:h-32 flex-shrink-0 rounded-xl sm:rounded-2xl overflow-hidden bg-muted">
                     <Image
                       src={item.image || '/placeholder.svg'}
                       alt={item.name}
@@ -71,21 +71,29 @@ export default function CartPage() {
                   </div>
 
                   {/* Product Info */}
-                  <div className="flex-1 flex flex-col justify-between">
-                    <div>
+                  <div className="flex-1 flex flex-col justify-between gap-4">
+                    <div className="flex-1">
                       <h3
-                        className="text-xl font-bold text-foreground mb-2"
+                        className="text-lg sm:text-xl font-bold text-foreground mb-2"
                         style={{ fontFamily: 'var(--font-heading)' }}
                       >
                         {item.name}
                       </h3>
-                      <p className="text-lg font-bold text-primary">
+                      <p className="text-base sm:text-lg font-bold text-primary mb-3">
                         ₹{item.price.toLocaleString()}
                       </p>
+                      
+                      {/* Subtotal - Mobile */}
+                      <div className="sm:hidden flex items-center justify-between pb-3 border-b border-muted">
+                        <p className="text-sm text-foreground/60">Subtotal</p>
+                        <p className="text-xl font-bold text-primary">
+                          ₹{(item.price * item.quantity).toLocaleString()}
+                        </p>
+                      </div>
                     </div>
 
                     {/* Quantity Control */}
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-3 sm:gap-4">
                       <div className="flex items-center gap-2 bg-muted rounded-full p-1">
                         <button
                           onClick={() => updateQuantity(item.id, item.quantity - 1)}
@@ -93,7 +101,7 @@ export default function CartPage() {
                         >
                           <Minus className="h-4 w-4" />
                         </button>
-                        <span className="px-4 font-bold">{item.quantity}</span>
+                        <span className="px-3 sm:px-4 font-bold text-sm sm:text-base">{item.quantity}</span>
                         <button
                           onClick={() => updateQuantity(item.id, item.quantity + 1)}
                           className="p-2 hover:bg-primary/10 rounded-full transition-all"
@@ -103,17 +111,17 @@ export default function CartPage() {
                       </div>
                       <button
                         onClick={() => removeFromCart(item.id)}
-                        className="p-3 hover:bg-red-50 text-red-600 rounded-full transition-all"
+                        className="p-2 sm:p-3 hover:bg-red-50 text-red-600 rounded-full transition-all"
                       >
-                        <Trash2 className="h-5 w-5" />
+                        <Trash2 className="h-4 w-4 sm:h-5 sm:w-5" />
                       </button>
                     </div>
                   </div>
 
-                  {/* Subtotal */}
-                  <div className="flex flex-col justify-between items-end">
+                  {/* Subtotal - Desktop */}
+                  <div className="hidden sm:flex flex-col justify-between items-end">
                     <p className="text-sm text-foreground/60">Subtotal</p>
-                    <p className="text-2xl font-bold text-primary">
+                    <p className="text-xl sm:text-2xl font-bold text-primary">
                       ₹{(item.price * item.quantity).toLocaleString()}
                     </p>
                   </div>
@@ -123,7 +131,7 @@ export default function CartPage() {
 
             {/* Order Summary */}
             <div className="lg:col-span-1">
-              <div className="bg-gradient-to-br from-primary/10 to-secondary/10 border-2 border-primary/20 rounded-3xl p-8 space-y-6 sticky top-20">
+              <div className="bg-gradient-to-br from-primary/10 to-secondary/10 border-2 border-primary/20 rounded-2xl sm:rounded-3xl p-6 sm:p-8 space-y-6 sticky top-20">
                 <h2
                   className="text-2xl font-bold text-foreground"
                   style={{ fontFamily: 'var(--font-heading)' }}

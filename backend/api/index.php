@@ -4,15 +4,27 @@
  */
 
 // Set CORS headers FIRST - before anything else
+// Use ob_start to prevent any output before headers
+if (!ob_get_level()) {
+    ob_start();
+}
+
+// Set all CORS headers
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS, PATCH');
 header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With, Accept, Origin, Cache-Control, X-File-Name');
 header('Access-Control-Allow-Credentials: true');
 header('Access-Control-Max-Age: 86400');
+header('Access-Control-Expose-Headers: Content-Length, Content-Type');
 
 // Handle preflight OPTIONS request IMMEDIATELY
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    // Clear any output
+    if (ob_get_level()) {
+        ob_clean();
+    }
     http_response_code(200);
+    header('Content-Length: 0');
     exit;
 }
 
@@ -29,7 +41,15 @@ $path = parse_url($requestUri, PHP_URL_PATH);
 // Remove leading slash
 $path = ltrim($path, '/');
 
-// Clean path (router already removed /api prefix)
+// For LiteSpeed/cPanel: Remove /backend/api prefix if present
+// Path might be: backend/api/auth/register or api/auth/register or auth/register
+$path = preg_replace('#^backend/api/#', '', $path);
+$path = preg_replace('#^api/#', '', $path);
+
+// Remove trailing slash (handle both /api/products and /api/products/)
+$path = rtrim($path, '/');
+
+// Clean path
 $path = trim($path, '/');
 
 // Route to appropriate endpoint

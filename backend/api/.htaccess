@@ -1,10 +1,12 @@
-# Main .htaccess for backend directory
-# Place this in: public_html/backend/.htaccess
+# CORS Headers via .htaccess
+# This file should be in: public_html/backend/api/.htaccess
 
+# Enable Rewrite Engine
 RewriteEngine On
 
 # CORS Headers - MUST BE FIRST (including on redirects)
 <IfModule mod_headers.c>
+    # Allow all origins
     Header always set Access-Control-Allow-Origin "*"
     Header always set Access-Control-Allow-Credentials "true"
     Header always set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS, PATCH"
@@ -13,21 +15,19 @@ RewriteEngine On
     Header always set Access-Control-Expose-Headers "Content-Length, Content-Type"
 </IfModule>
 
-# Disable directory trailing slash redirects for API
-DirectorySlash Off
-
 # Handle OPTIONS requests FIRST (before any other rules)
 RewriteCond %{REQUEST_METHOD} OPTIONS
-RewriteRule ^api/(.*)$ api/index.php [QSA,L,E=CORS:1]
+RewriteRule ^(.*)$ index.php [QSA,L]
 
-# Route /api/* requests to api/index.php
-# Handle both with and without trailing slash - rewrite internally (no redirect)
+# IMPORTANT: Route ALL requests to index.php (including those with trailing slashes)
+# This ensures PHP handles CORS headers for all requests
+# Handle both /cart and /cart/ - rewrite internally (no redirect)
 RewriteCond %{REQUEST_URI} ^/backend/api/(.+)/$
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^api/(.+)/$ api/$1 [QSA,L,E=CORS:1]
+RewriteRule ^(.+)/$ index.php [QSA,L]
 
 # Route to index.php (without trailing slash)
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^api/(.*)$ api/index.php [QSA,L,E=CORS:1]
+RewriteRule ^(.*)$ index.php [QSA,L]

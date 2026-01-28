@@ -89,8 +89,8 @@ export default function Header() {
               >
                 <ShoppingCart className="h-5 w-5" />
                 {cart.length > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-warning text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
-                    {cart.length}
+                  <span className="absolute -top-1 -right-1 bg-black text-white text-xs font-bold rounded-full w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center border-2 border-white shadow-md">
+                    {cart.length > 99 ? '99+' : cart.length}
                   </span>
                 )}
               </Button>
@@ -185,7 +185,7 @@ export default function Header() {
                   {link.label}
                 </Link>
               ))}
-              {isAuthenticated && (
+              {isAuthenticated ? (
                 <>
                   <Link
                     href="/orders"
@@ -202,6 +202,44 @@ export default function Header() {
                   >
                     <UserCircle className="h-4 w-4" />
                     My Profile
+                  </Link>
+                  {isAdmin && (
+                    <Link
+                      href="/admin"
+                      className="rounded-lg px-4 py-2 text-sm font-medium text-foreground/70 transition-colors hover:bg-primary/10 hover:text-primary flex items-center gap-2"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      Admin Panel
+                    </Link>
+                  )}
+                  <button
+                    onClick={() => {
+                      logout();
+                      router.push('/');
+                      setIsMenuOpen(false);
+                    }}
+                    className="rounded-lg px-4 py-2 text-sm font-medium text-foreground/70 transition-colors hover:bg-secondary hover:text-foreground flex items-center gap-2 text-left w-full"
+                  >
+                    <LogOut className="h-4 w-4" />
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link
+                    href="/login"
+                    className="rounded-lg px-4 py-2 text-sm font-medium text-foreground/70 transition-colors hover:bg-primary/10 hover:text-primary flex items-center gap-2"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    <User className="h-4 w-4" />
+                    Login
+                  </Link>
+                  <Link
+                    href="/register"
+                    className="rounded-lg px-4 py-2 text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-colors flex items-center gap-2"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Sign Up
                   </Link>
                 </>
               )}
