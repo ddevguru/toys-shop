@@ -164,8 +164,12 @@ class ApiService {
 
   // Orders
   async getOrders(params?: any) {
-    const queryString = new URLSearchParams(params).toString();
-    return this.request(`orders?${queryString}`);
+    if (params && Object.keys(params).length > 0) {
+      const queryString = new URLSearchParams(params).toString();
+      return this.request(`orders?${queryString}`);
+    }
+    // No params - just request orders endpoint
+    return this.request('orders');
   }
 
   async createOrder(orderData: any) {
@@ -176,6 +180,10 @@ class ApiService {
   }
 
   async getOrder(id: number) {
+    // Validate ID before making request
+    if (!id || isNaN(id) || id <= 0) {
+      throw new Error('Invalid order ID');
+    }
     return this.request(`orders?id=${id}`);
   }
 

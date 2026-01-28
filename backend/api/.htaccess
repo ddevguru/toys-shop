@@ -19,15 +19,16 @@ RewriteEngine On
 RewriteCond %{REQUEST_METHOD} OPTIONS
 RewriteRule ^(.*)$ index.php [QSA,L]
 
-# IMPORTANT: Route ALL requests to index.php (including those with trailing slashes)
-# This ensures PHP handles CORS headers for all requests
-# Handle both /cart and /cart/ - rewrite internally (no redirect)
-RewriteCond %{REQUEST_URI} ^/backend/api/(.+)/$
+# IMPORTANT: Route ALL requests to index.php
+# This catches everything - files, directories, trailing slashes, etc.
+# Only exclude actual PHP files and index.php itself
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.+)/$ index.php [QSA,L]
-
-# Route to index.php (without trailing slash)
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} !^/backend/api/index\.php$
 RewriteRule ^(.*)$ index.php [QSA,L]
+
+# Also catch requests that might be treated as directories (with trailing slash)
+# This ensures /cart/ routes to index.php even if server thinks it's a directory
+RewriteCond %{REQUEST_URI} ^/backend/api/(.+)/$
+RewriteCond %{REQUEST_URI} !^/backend/api/index\.php/$
+RewriteRule ^(.+)/$ index.php [QSA,L]

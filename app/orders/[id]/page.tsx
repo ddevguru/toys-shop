@@ -30,8 +30,15 @@ export default function OrderDetailsPage() {
   }, [isAuthenticated, loading, orderId]);
 
   const loadOrder = async () => {
+    if (!orderId || isNaN(parseInt(orderId))) {
+      console.error('Invalid order ID:', orderId);
+      setLoadingData(false);
+      return;
+    }
+    
     try {
-      const response = await api.getOrder(parseInt(orderId)) as any;
+      const orderIdNum = parseInt(orderId);
+      const response = await api.getOrder(orderIdNum) as any;
       if (response.success) {
         setOrder(response.data || response.order);
       }
@@ -73,7 +80,11 @@ export default function OrderDetailsPage() {
   };
 
   const handleDownloadInvoice = async () => {
-    if (!order) return;
+    if (!order || !order.id) {
+      alert('Order information is missing. Please refresh the page.');
+      return;
+    }
+    
     try {
       // First ensure invoice exists
       const generateResponse = await api.generateInvoice(order.id) as any;

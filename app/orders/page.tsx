@@ -28,12 +28,19 @@ export default function OrdersPage() {
 
   const loadOrders = async () => {
     try {
-      const response = await api.getOrders();
+      const response = await api.getOrders() as any;
+      console.log('Orders response:', response); // Debug log
       if (response.success) {
-        setOrders(response.data || []);
+        // Handle different response formats
+        const ordersData = response.data || response.orders || [];
+        setOrders(Array.isArray(ordersData) ? ordersData : []);
+      } else {
+        console.error('Failed to load orders:', response.message);
+        setOrders([]);
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Failed to load orders:', error);
+      setOrders([]);
     } finally {
       setLoadingData(false);
     }

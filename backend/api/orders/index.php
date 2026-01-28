@@ -30,7 +30,7 @@ try {
     switch ($method) {
         case 'GET':
             // Check if requesting a single order by ID
-            if (isset($_GET['id'])) {
+            if (isset($_GET['id']) && $_GET['id'] !== '' && $_GET['id'] !== 'NaN' && is_numeric($_GET['id'])) {
                 $orderId = (int)$_GET['id'];
                 $stmt = $conn->prepare("
                     SELECT o.*, u.name as user_name, u.email as user_email

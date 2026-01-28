@@ -13,21 +13,18 @@ RewriteEngine On
     Header always set Access-Control-Expose-Headers "Content-Length, Content-Type"
 </IfModule>
 
-# Disable directory trailing slash redirects for API
-DirectorySlash Off
-
 # Handle OPTIONS requests FIRST (before any other rules)
 RewriteCond %{REQUEST_METHOD} OPTIONS
-RewriteRule ^api/(.*)$ api/index.php [QSA,L,E=CORS:1]
+RewriteRule ^api/(.*)$ api/index.php [QSA,L]
 
 # Route /api/* requests to api/index.php
 # Handle both with and without trailing slash - rewrite internally (no redirect)
 RewriteCond %{REQUEST_URI} ^/backend/api/(.+)/$
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^api/(.+)/$ api/$1 [QSA,L,E=CORS:1]
+RewriteRule ^api/(.+)/$ api/index.php [QSA,L]
 
 # Route to index.php (without trailing slash)
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^api/(.*)$ api/index.php [QSA,L,E=CORS:1]
+RewriteRule ^api/(.*)$ api/index.php [QSA,L]

@@ -21,8 +21,15 @@ function CheckoutSuccessContent() {
   }, [orderId]);
 
   const fetchOrderDetails = async () => {
+    if (!orderId || isNaN(parseInt(orderId))) {
+      console.error('Invalid order ID:', orderId);
+      setLoading(false);
+      return;
+    }
+    
     try {
-      const response = await api.getOrder(parseInt(orderId || '0')) as any;
+      const orderIdNum = parseInt(orderId);
+      const response = await api.getOrder(orderIdNum) as any;
       if (response.success) {
         const orderData = response.data || response.order || {};
         console.log('Order data:', orderData); // Debug log
@@ -36,24 +43,35 @@ function CheckoutSuccessContent() {
   };
 
   const handleDownloadInvoice = async () => {
-    if (!orderId) return;
+    if (!orderId || isNaN(parseInt(orderId))) {
+      alert('Order ID is missing or invalid. Please refresh the page.');
+      return;
+    }
+    
+    // Use order.id if available (more reliable), otherwise use orderId from URL
+    const invoiceOrderId = order?.id || parseInt(orderId);
+    
+    if (!invoiceOrderId || isNaN(invoiceOrderId)) {
+      alert('Order information is missing. Please refresh the page.');
+      return;
+    }
     
     try {
       // First ensure invoice exists
-      const generateResponse = await api.generateInvoice(parseInt(orderId)) as any;
+      const generateResponse = await api.generateInvoice(invoiceOrderId) as any;
       if (!generateResponse.success) {
         alert(generateResponse.message || 'Failed to generate invoice');
         return;
       }
 
       // Download the invoice file
-      const blob = await api.downloadInvoice(parseInt(orderId));
+      const blob = await api.downloadInvoice(invoiceOrderId);
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
       const fileName = generateResponse.invoice_url?.includes('.pdf') 
-        ? `invoice-${orderId}.pdf` 
-        : `invoice-${orderId}.html`;
+        ? `invoice-${invoiceOrderId}.pdf` 
+        : `invoice-${invoiceOrderId}.html`;
       a.download = fileName;
       document.body.appendChild(a);
       a.click();
