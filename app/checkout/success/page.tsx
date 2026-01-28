@@ -15,8 +15,12 @@ function CheckoutSuccessContent() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (orderId) {
+    if (orderId && orderId !== 'undefined' && orderId !== 'NaN') {
       fetchOrderDetails();
+    } else if (!orderId) {
+      // No order ID - redirect to home or orders page
+      console.error('Order ID missing from URL');
+      router.push('/orders');
     }
   }, [orderId]);
 

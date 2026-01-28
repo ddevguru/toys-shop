@@ -179,12 +179,18 @@ class ApiService {
     });
   }
 
-  async getOrder(id: number) {
+  async getOrder(id: number | string | undefined) {
     // Validate ID before making request
-    if (!id || isNaN(id) || id <= 0) {
-      throw new Error('Invalid order ID');
+    if (id === undefined || id === null || id === 'undefined' || id === 'NaN') {
+      throw new Error('Invalid order ID: ID is missing');
     }
-    return this.request(`orders?id=${id}`);
+    
+    const orderIdNum = typeof id === 'string' ? parseInt(id) : id;
+    if (isNaN(orderIdNum) || orderIdNum <= 0) {
+      throw new Error(`Invalid order ID: ${id} is not a valid number`);
+    }
+    
+    return this.request(`orders?id=${orderIdNum}`);
   }
 
   // Generic methods

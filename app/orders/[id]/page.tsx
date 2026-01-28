@@ -20,30 +20,49 @@ export default function OrderDetailsPage() {
   const [loadingData, setLoadingData] = useState(true);
 
   useEffect(() => {
-    if (!loading) {
+    if (!loading && orderId) {
       if (!isAuthenticated) {
         router.push('/login?redirect=/orders/' + orderId);
         return;
       }
       loadOrder();
+    } else if (!loading && !orderId) {
+      // Order ID is missing - redirect to orders list
+      router.push('/orders');
     }
   }, [isAuthenticated, loading, orderId]);
 
   const loadOrder = async () => {
-    if (!orderId || isNaN(parseInt(orderId))) {
+    // Validate orderId before proceeding
+    if (!orderId || typeof orderId !== 'string' || orderId === 'undefined' || orderId === 'NaN') {
       console.error('Invalid order ID:', orderId);
       setLoadingData(false);
+      router.push('/orders');
+      return;
+    }
+    
+    const orderIdNum = parseInt(orderId);
+    if (isNaN(orderIdNum) || orderIdNum <= 0) {
+      console.error('Invalid order ID (not a number):', orderId);
+      setLoadingData(false);
+      router.push('/orders');
       return;
     }
     
     try {
-      const orderIdNum = parseInt(orderId);
       const response = await api.getOrder(orderIdNum) as any;
       if (response.success) {
         setOrder(response.data || response.order);
+      } else {
+        console.error('Failed to load order:', response.message);
+        router.push('/orders');
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Failed to load order:', error);
+      // Don't redirect on network errors, just show error
+      if (error.message?.includes('Invalid order ID')) {
+        router.push('/orders');
+      }
     } finally {
       setLoadingData(false);
     }
